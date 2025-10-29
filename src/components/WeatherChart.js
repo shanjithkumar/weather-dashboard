@@ -63,26 +63,57 @@ export default function WeatherChart({ forecast }) {
     ],
   };
 
-  // ✅ 4. Chart options for better UX
+  // ✅ 4. Responsive chart options
   const options = {
     responsive: true,
+    maintainAspectRatio: false, // 👈 makes it adapt to parent div
     plugins: {
-      legend: { display: true, position: "top" },
-      title: { display: true, text: "Temperature Trend (Next 5 Days)" },
+      legend: {
+        display: true,
+        position: "top",
+        labels: {
+          font: { size: 12 },
+        },
+      },
+      title: {
+        display: true,
+        text: "Temperature Trend (Next 5 Days)",
+        font: { size: 14 },
+      },
     },
     scales: {
-      x: { ticks: { maxRotation: 90, minRotation: 45 } },
-      y: { beginAtZero: false },
+      x: {
+        ticks: {
+          maxRotation: 60,
+          minRotation: 30,
+          font: { size: 10 },
+        },
+      },
+      y: {
+        beginAtZero: false,
+        ticks: {
+          font: { size: 10 },
+        },
+      },
     },
   };
 
+  // ✅ 5. Responsive container with Tailwind
   return (
-    <div className="card mt-4">
-      <div className="card-body">
-        <h5 className="card-title text-center">Temperature Trend</h5>
-        <Line data={data} options={options} />
+    <div className="card mt-4 w-full">
+      <div className="card-body p-2 sm:p-4">
+        <h5 className="card-title text-center text-base sm:text-lg font-semibold mb-2">
+          Temperature Trend
+        </h5>
+
+        {/* Responsive chart wrapper */}
+        <div className="relative w-full h-[250px] sm:h-[400px]">
+          <Line data={data} options={options} />
+        </div>
       </div>
-      
+
+      {/* Add space after chart */}
+      <br />
     </div>
   );
 }
